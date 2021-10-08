@@ -1,3 +1,11 @@
+// создаем игроков и присваиваем каждому свой элемент
+const playerFactory = (sign) => {
+    return {sign}
+}
+
+const player1 = playerFactory('X');
+const player2 = playerFactory('O');
+
 let gameBoard = (function() {
     'use strict';
     const boardContainer = document.querySelector('.board-container');
@@ -26,37 +34,21 @@ let gameBoard = (function() {
             container.textContent = item;
             boardContainer.appendChild(container);
         })
+
+        // выводим X по нажанию на div
+        const boardElements = document.querySelectorAll('.board-element');
+        boardElements.forEach((element) => {
+            element.addEventListener('click', () => {
+                gameBoard.boardContent.splice(element.id, 1, player1.sign);
+                gameBoard.displayBoard()
+            })
+        })
     }
 
     displayBoard()
 
     return {
         boardContent: boardContent,
-        displayBoard: displayBoard,
+        displayBoard: displayBoard
     };
 })();
-
-let displayController = (function() {
-    'use strict';
-
-    const boardElements = document.querySelectorAll('.board-element');
-    boardElements.forEach((element) => {
-        element.addEventListener('click', () => {
-            gameBoard.boardContent.splice(1, 1, 'X');
-            gameBoard.displayBoard();
-
-        })
-    })
-
-    return {
-
-    };
-})();
-
-// создаем игроков и присваиваем каждому свой элемент
-const playerFactory = (sign) => {
-    return {sign}
-}
-
-const player1 = playerFactory('X');
-const player2 = playerFactory('O');
