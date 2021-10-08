@@ -12,6 +12,8 @@ let gameBoard = (function() {
 
     let boardContent = ['','','','','','','','',''];
 
+    let currentTurn = 0;
+
     function displayBoard() {
         // divCounter используется для создания id
         let divCounter = 0;
@@ -39,7 +41,12 @@ let gameBoard = (function() {
         const boardElements = document.querySelectorAll('.board-element');
         boardElements.forEach((element) => {
             element.addEventListener('click', () => {
-                gameBoard.boardContent.splice(element.id, 1, player1.sign);
+                if (currentTurn % 2 === 0) {
+                    gameBoard.boardContent.splice(element.id, 1, player1.sign);
+                } else if (currentTurn % 2 !== 0) {
+                    gameBoard.boardContent.splice(element.id, 1, player2.sign);
+                }
+                currentTurn++;
                 gameBoard.displayBoard()
             })
         })
