@@ -33,29 +33,49 @@ let gameBoard = (function() {
             container.id = divCounter;
             divCounter++;
 
+            // выводим в div содежимое массива
             container.textContent = item;
+
             boardContainer.appendChild(container);
         })
 
-        // выводим X по нажанию на div
+        // выводим X или O по нажанию на div
         const boardElements = document.querySelectorAll('.board-element');
         boardElements.forEach((element) => {
-            element.addEventListener('click', () => {
-                if (currentTurn % 2 === 0) {
-                    gameBoard.boardContent.splice(element.id, 1, player1.sign);
-                } else if (currentTurn % 2 !== 0) {
-                    gameBoard.boardContent.splice(element.id, 1, player2.sign);
-                }
-                currentTurn++;
-                gameBoard.displayBoard()
-            })
+
+            // если div пустой
+            if (element.innerHTML === '') {
+                element.addEventListener('click', () => {
+
+                    // в зависимости от четности хода выводим O или X
+                    if (currentTurn % 2 === 0) {
+                        boardContent.splice(element.id, 1, player1.sign);
+                    } else if (currentTurn % 2 !== 0) {
+                        boardContent.splice(element.id, 1, player2.sign);
+                    }
+
+                    currentTurn++;
+
+                    // обновляем доску по клику на div
+                    displayBoard()
+                })
+            }
         })
+
+        const h1Container = document.querySelector('#h1-container');
+        if (boardContent[0] === 'X' && boardContent[1] === 'X' && boardContent[2] === 'X') {
+            const h1 = document.createElement('h1');
+            h1.innerHTML = 'Player 1 wins';
+            h1Container.appendChild(h1);
+            boardElements.forEach((element) => {
+                element.removeEventListener('click');
+            })
+        }
     }
 
     displayBoard()
 
     return {
-        boardContent: boardContent,
-        displayBoard: displayBoard
+        boardContent: boardContent
     };
 })();
