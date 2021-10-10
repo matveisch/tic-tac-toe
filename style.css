@@ -13,6 +13,10 @@ html {
     width: 156px;
 }
 
+#h1-div {
+    text-align: center;
+}
+
 h1 {
     font-size: 30px;
 }

@@ -107,7 +107,19 @@ let gameBoard = (function() {
             h1.innerHTML = 'Draw';
         }
 
-
+        if (h1.innerHTML !== '') {
+            let h1Div = document.getElementById('h1-div');
+            let button = document.createElement('button');
+            button.textContent = 'reset';
+            button.addEventListener('click', () => {
+                boardContent = ['','','','','','','','',''];
+                h1.innerHTML = '';
+                currentTurn = 0;
+                displayBoard();
+                h1Div.removeChild(button)
+            })
+            h1Div.appendChild(button);
+        }
     }
 
     displayBoard()
